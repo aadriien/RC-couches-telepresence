@@ -4,9 +4,9 @@ POETRY ?= poetry
 VENV_DIR = .venv
 PYTHON_VERSION = python3
 
-.PHONY: setup run clean 
+.PHONY: setup run clean
 
-all: setup run 
+all: setup run
 
 # Install Poetry dependencies & set up venv
 setup:
@@ -18,10 +18,13 @@ setup:
 		$(POETRY) install --no-root --quiet; \
 	fi
 
-run: 
+run:
 	@$(POETRY) run python zulip-bot/bot.py
 
 clean:
 	@echo "Removing virtual environment..."
 	@rm -rf .venv
 
+format:
+    @echo "Formatting repo..."
+    @pre-commit run --all-files
