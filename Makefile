@@ -19,7 +19,7 @@ setup:
 	fi
 
 run: 
-	@$(POETRY) run python bot.py
+	@$(POETRY) run python zulip-bot/bot.py
 
 clean:
 	@echo "Removing virtual environment..."
