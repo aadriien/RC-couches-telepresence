@@ -1,0 +1,9 @@
+flow / steps:
+
+1. bot is live & running 24/7
+2. something triggers bot response (couches started, couches stopped)
+3. new message alert is created
+4. notification is sent to zulip stream 
+
+
+
