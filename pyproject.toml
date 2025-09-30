@@ -1,0 +1,25 @@
+[tool.poetry]
+package-mode = false
+
+
+[project]
+name = "rc-couches-telepresence"
+version = "0.1.0"
+description = ""
+authors = [
+    { name = "aadriien", email = "adriienlynch@gmail.com" },
+    { name = "mmegaard", email = "mmegaard@gmail.com" },
+]
+
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+requests = "^2.31.0"
+python-dotenv = "^1.0.0"
+zulip = "^0.9.0"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
