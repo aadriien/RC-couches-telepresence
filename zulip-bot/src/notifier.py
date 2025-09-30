@@ -5,8 +5,8 @@
 ###############################################################################
 
 
-STREAM_ID = "test-bot" # channel (e.g. checkins)
-SUBJECT = "RC-couches-telepresence-bridge" # topic (e.g. FirstName LastName)
+STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
+SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
 
 
 def send_notification(client):
