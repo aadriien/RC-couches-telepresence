@@ -5,19 +5,19 @@
 ###############################################################################
 
 
-# NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
-# NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
+NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
+NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
 
-# HUB_STREAM_ID = "397 Bridge"
-# HUB_SUBJECT = "RCTV Couches Telepresence"
+HUB_STREAM_ID = "397 Bridge"
+HUB_SUBJECT = "RCTV Couches Telepresence"
 
 
 # TESTING FOR NOW
-NOTICE_STREAM_ID = "test-bot" 
-NOTICE_SUBJECT = "RC-couches-telepresence-bridge" 
+# NOTICE_STREAM_ID = "test-bot" 
+# NOTICE_SUBJECT = "RC-couches-telepresence-bridge" 
 
-HUB_STREAM_ID = "test-bot"
-HUB_SUBJECT = "RC-couches-telepresence-bridge"
+# HUB_STREAM_ID = "test-bot"
+# HUB_SUBJECT = "RC-couches-telepresence-bridge"
 
 
 ZOOM_LINK = "https://www.recurse.com/zoom/couches"
@@ -39,7 +39,7 @@ def send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, clien
     hub_request_link = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
 
     REQUEST_SUCCEEDED = (
-        f"{mention_markdown} Great! Thanks for pinging me. "
+        f"{mention_markdown} Hey there! Thanks for pinging me. "
         f"I'll send a request to folks at the hub over in {hub_request_link}"
     )
 
@@ -47,11 +47,15 @@ def send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, clien
 
     # Prepare request to in-person hub folks (397 Bridge channel)
     mention_topic = "@**topic**"
+    testing_spot = "#**test-bot>RC-couches-telepresence-bridge**"
     
     REQUEST_TO_HUB = (
         f"{mention_topic} Hey hub folks! "
         "The remote RCers would like to open the couches bridge for telepresence. "
         "Can you help them out? Activate the Zoom call on RCTV!"
+
+        "\n\nI'm a new bot being tested in production. Feel free to say hello to me! "
+        f"For more info, visit {testing_spot}"
     )
 
     send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
