@@ -27,11 +27,12 @@ COUCHES_ACTIVE_NOTICE = f"Couch bridge is active! Join the zoom call: {ZOOM_LINK
 
 
 # Prepare request to in-person hub folks (397 Bridge channel)
-MENTION_TOPIC = "@**topic**"
+# MENTION_TAG = "@**topic**"
+MENTION_TAG = "@*Currently at the hub*"
 TESTING_SPOT = "#**test-bot>RC-couches-telepresence-bridge**"
 
 REQUEST_TO_HUB = (
-    f"{MENTION_TOPIC} Hey hub folks! "
+    f"{MENTION_TAG} Hey hub folks! "
     "The remote RCers would like to open the couches bridge for telepresence. "
     "Can you help them out? Activate the Zoom call on RCTV!"
 
