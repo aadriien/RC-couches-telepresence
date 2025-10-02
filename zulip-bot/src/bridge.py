@@ -5,7 +5,19 @@
 ###############################################################################
 
 
-from src.notifier import send_request_succeeded, send_request_failed
+from src.notifier import send_dm, send_request_succeeded, send_request_failed 
+
+
+VALID_PROMPTS = [
+    "open the portal",
+    "open the couch portal",
+    "open the couches portal",
+    "open the bridge",
+    "open the couch bridge",
+    "open the couches bridge",
+]
+
+BOT_USER_ID = 971460
 
 
 def process_request(msg_event, client):
@@ -19,28 +31,33 @@ def process_request(msg_event, client):
     is_mention = "mentioned" in msg_event.get("flags", [])
 
     if is_dm:
-        print("message is DM!")
-
-        print(msg_event)
-        print(msg["content"])
-
+        parse_dm(msg, client)
 
     elif is_mention:
-        print("message is mention!")
-
-        print(msg_event)
-        print(msg["content"])
-
+        # Prevent infinite loop on itself
+        if "wildcard_mentioned" in msg_event.get("flags", []):
+            return
         parse_message(msg, client)
 
 
+def parse_dm(msg, client):
+    sender_id = msg["sender_id"]
+    content = msg["content"].lower()
+
+    # Sanity check that should never come up, but to be safe with looping
+    if sender_id == BOT_USER_ID:
+        return
+
+    if not any(prompt in content for prompt in VALID_PROMPTS):
+        send_dm(False, sender_id, client)
+    else:
+        send_dm(True, sender_id, client)
+
+
 def parse_message(msg, client):
-    VALID_PROMPTS = [
-        "open the portal",
-        "open the couch portal",
-        "open the bridge",
-        "open the couch bridge"
-    ]
+    # Extra check to ensure bot doesn't loop on itself
+    if msg["sender_id"] == BOT_USER_ID:
+        return
 
     # Tag person who requested bridge to notify them of result
     user_to_mention = msg["sender_full_name"]

@@ -20,13 +20,55 @@ HUB_SUBJECT = "RCTV Couches Telepresence"
 # HUB_SUBJECT = "RC-couches-telepresence-bridge"
 
 
+HUB_REQUEST_LINK = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
+
 ZOOM_LINK = "https://www.recurse.com/zoom/couches"
 COUCHES_ACTIVE_NOTICE = f"Couch bridge is active! Join the zoom call: {ZOOM_LINK}"
 
 
-def send_notification(notification_msg, stream_id, subject, client):
+# Prepare request to in-person hub folks (397 Bridge channel)
+MENTION_TOPIC = "@**topic**"
+TESTING_SPOT = "#**test-bot>RC-couches-telepresence-bridge**"
 
-    # Send a channel message
+REQUEST_TO_HUB = (
+    f"{MENTION_TOPIC} Hey hub folks! "
+    "The remote RCers would like to open the couches bridge for telepresence. "
+    "Can you help them out? Activate the Zoom call on RCTV!"
+
+    "\n\nI'm a new bot being tested in production. Feel free to say hello to me! "
+    f"For more info, visit {TESTING_SPOT}"
+)
+
+
+def get_dm_text(is_successful):
+    SUCCESS = (
+        f"Hey there! Thanks for pinging me. "
+        f"I'll send a request to folks at the hub over in {HUB_REQUEST_LINK}"
+    )
+    FAIL = (
+        f"Sorry, I don't understand. "
+        "If you would like to request a bridge with the hub couches, say "
+        "\"Please open the portal\", or \"Please open the bridge\".\n\n"
+    )
+
+    return SUCCESS if is_successful else FAIL
+
+
+def send_dm(is_successful, sender_id, client):
+    # Send DM to user who reached out
+    client.send_message({
+        "type": "private",
+        "to": [sender_id],
+        "content": get_dm_text(is_successful)
+    })
+
+    # Also send request to hub if valid
+    if is_successful:
+        send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
+
+
+def send_notification(notification_msg, stream_id, subject, client):
+    # Send message to channel (stream_id)
     client.send_message({
         "type": "stream",
         "to": stream_id,
@@ -36,28 +78,13 @@ def send_notification(notification_msg, stream_id, subject, client):
 
 
 def send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client):
-    hub_request_link = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
-
     REQUEST_SUCCEEDED = (
         f"{mention_markdown} Hey there! Thanks for pinging me. "
-        f"I'll send a request to folks at the hub over in {hub_request_link}"
+        f"I'll send a request to folks at the hub over in {HUB_REQUEST_LINK}"
     )
 
+    # Confirmation for user, along with request to hub
     send_notification(REQUEST_SUCCEEDED, curr_stream_id, curr_subject, client)
-
-    # Prepare request to in-person hub folks (397 Bridge channel)
-    mention_topic = "@**topic**"
-    testing_spot = "#**test-bot>RC-couches-telepresence-bridge**"
-    
-    REQUEST_TO_HUB = (
-        f"{mention_topic} Hey hub folks! "
-        "The remote RCers would like to open the couches bridge for telepresence. "
-        "Can you help them out? Activate the Zoom call on RCTV!"
-
-        "\n\nI'm a new bot being tested in production. Feel free to say hello to me! "
-        f"For more info, visit {testing_spot}"
-    )
-
     send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
     
 
@@ -69,5 +96,7 @@ def send_request_failed(mention_markdown, curr_stream_id, curr_subject, client):
         "Don't forget to tag me!"
     )
 
+    # Error message for user, with no further action
     send_notification(REQUEST_FAILED, curr_stream_id, curr_subject, client)
+
 
