@@ -4,9 +4,9 @@ POETRY ?= poetry
 VENV_DIR = .venv
 PYTHON_VERSION = python3
 
-.PHONY: setup run clean 
+.PHONY: setup run-client run-server clean 
 
-all: setup run 
+all: setup run-server 
 
 # Install Poetry dependencies & set up venv
 setup:
