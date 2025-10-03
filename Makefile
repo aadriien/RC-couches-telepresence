@@ -18,8 +18,13 @@ setup:
 		$(POETRY) install --no-root --quiet; \
 	fi
 
-run: 
-	@$(POETRY) run python zulip-bot/bot.py
+# Run bot client script as one-off instance
+run-client:
+	@$(POETRY) run python zulip-bot/bot.py --client
+
+# Run bot server 24/7 to listen & respond 
+run-server:
+	@$(POETRY) run python zulip-bot/bot.py --server
 
 clean:
 	@echo "Removing virtual environment..."

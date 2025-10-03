@@ -22,12 +22,16 @@ HUB_SUBJECT = "RCTV Couches Telepresence"
 
 HUB_REQUEST_LINK = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
 
+VIRTUAL_TAG = "@**topic**"
 ZOOM_LINK = "https://www.recurse.com/zoom/couches"
-COUCHES_ACTIVE_NOTICE = f"Couch bridge is active! Join the zoom call: {ZOOM_LINK}"
+
+COUCHES_ACTIVE_NOTICE = (
+    f"{VIRTUAL_TAG} The couches bridge is **active**! " 
+    f"Join the Zoom call: {ZOOM_LINK}"
+)
 
 
 # Prepare request to in-person hub folks (397 Bridge channel)
-# MENTION_TAG = "@**topic**"
 MENTION_TAG = "@*Currently at the hub*"
 TESTING_SPOT = "#**test-bot>RC-couches-telepresence-bridge**"
 
@@ -76,6 +80,10 @@ def send_notification(notification_msg, stream_id, subject, client):
         "topic": subject,
         "content": notification_msg
     })
+
+
+def send_announcement(client):
+    send_notification(COUCHES_ACTIVE_NOTICE, NOTICE_STREAM_ID, NOTICE_SUBJECT, client)
 
 
 def send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client):
