@@ -5,19 +5,19 @@
 ###############################################################################
 
 
-NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
-NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
+# NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
+# NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
 
-HUB_STREAM_ID = "397 Bridge"
-HUB_SUBJECT = "RCTV Couches Telepresence"
+# HUB_STREAM_ID = "397 Bridge"
+# HUB_SUBJECT = "RCTV Couches Telepresence"
 
 
 # TESTING FOR NOW
-# NOTICE_STREAM_ID = "test-bot" 
-# NOTICE_SUBJECT = "RC-couches-telepresence-bridge" 
+NOTICE_STREAM_ID = "test-bot" 
+NOTICE_SUBJECT = "RC-couches-telepresence-bridge" 
 
-# HUB_STREAM_ID = "test-bot"
-# HUB_SUBJECT = "RC-couches-telepresence-bridge"
+HUB_STREAM_ID = "test-bot"
+HUB_SUBJECT = "RC-couches-telepresence-bridge"
 
 
 HUB_REQUEST_LINK = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
@@ -27,6 +27,11 @@ ZOOM_LINK = "https://www.recurse.com/zoom/couches"
 
 COUCHES_ACTIVE_NOTICE = (
     f"{VIRTUAL_TAG} The couches bridge is **active**! " 
+    f"Join the Zoom call: {ZOOM_LINK}"
+)
+
+COUCHES_ALREADY_ACTIVE = (
+    f"The couches bridge is already **active**! " 
     f"Join the Zoom call: {ZOOM_LINK}"
 )
 
@@ -59,17 +64,13 @@ def get_dm_text(is_successful):
     return SUCCESS if is_successful else FAIL
 
 
-def send_dm(is_successful, sender_id, client):
+def send_dm(text_content, sender_id, client):
     # Send DM to user who reached out
     client.send_message({
         "type": "private",
         "to": [sender_id],
-        "content": get_dm_text(is_successful)
+        "content": text_content
     })
-
-    # Also send request to hub if valid
-    if is_successful:
-        send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
 
 
 def send_notification(notification_msg, stream_id, subject, client):

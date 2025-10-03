@@ -5,7 +5,13 @@
 ###############################################################################
 
 
-from src.notifier import send_dm, send_request_succeeded, send_request_failed 
+from src.status import status_is_active
+from src.notifier import (
+    COUCHES_ALREADY_ACTIVE, REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT,
+    get_dm_text, send_dm, 
+    send_notification,
+    send_request_succeeded, send_request_failed
+) 
 
 
 VALID_PROMPTS = [
@@ -49,9 +55,18 @@ def parse_dm(msg, client):
         return
 
     if not any(prompt in content for prompt in VALID_PROMPTS):
-        send_dm(False, sender_id, client)
+        #send dm to user telling them correct way to address bot
+        send_dm(get_dm_text(False), sender_id, client)
     else:
-        send_dm(True, sender_id, client)
+        # Request is valid, now check if couches already active
+        is_already_active = status_is_active(client, BOT_USER_ID)
+        if not is_already_active: 
+            #send a topic message to have hub people turn it on
+            send_dm(get_dm_text(True), sender_id, client)
+            send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
+        else:
+            #send a dm to the user telling them it's already active with link
+            send_dm(COUCHES_ALREADY_ACTIVE, sender_id, client)
 
 
 def parse_message(msg, client):
@@ -70,6 +85,9 @@ def parse_message(msg, client):
     if not any(prompt in content for prompt in VALID_PROMPTS):
         send_request_failed(mention_markdown, curr_stream_id, curr_subject, client)
     else:
-        send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client)
+        # Request is valid, now check if couches already active
+        is_already_active = status_is_active(client, BOT_USER_ID)
+        if not is_already_active: 
+            send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client)
 
 
