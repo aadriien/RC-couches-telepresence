@@ -5,8 +5,8 @@
 ###############################################################################
 
 
-STREAM_ID = "🧑‍💻 current batches"  # channel (e.g. checkins)
-SUBJECT = "Virtual couches co-working"  # topic (e.g. FirstName LastName)
+STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
+SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
 ZOOM_LINK = "https://www.recurse.com/zoom/couches"
 
 
