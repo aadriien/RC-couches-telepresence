@@ -21,6 +21,3 @@ if __name__ == "__main__":
     bot = CouchesBridgeBot()
 
     send_notification(bot.client)
-    
-
-

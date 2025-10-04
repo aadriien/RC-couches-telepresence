@@ -1,0 +1,15 @@
+#!/bin/sh
+
+
+zoom ${ZOOMLINK}
+
+while ! wmctrl -l | grep -q "Meeting"; do
+    sleep 1
+done
+
+wmctrl -r "Meeting" -e 0,0,0,-1,-1
+wmctrl -r "Meeting" -e 0,0,0,-1,-1 add/maximized_vert,maximized_horz
+
+(cd /home/recurse/RC-couches-telepresence && poetry shell && python zulip-bot/bot.py )
+
+

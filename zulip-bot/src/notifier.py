@@ -14,11 +14,11 @@ def send_notification(client):
     couches_active_notice = f"Couch bridge is active! Join the zoom call: {ZOOM_LINK}"
 
     # Send a channel message
-    client.send_message({
-        "type": "stream",
-        "to": STREAM_ID,
-        "topic": SUBJECT,
-        "content": couches_active_notice
-    })
-
-
+    client.send_message(
+        {
+            "type": "stream",
+            "to": STREAM_ID,
+            "topic": SUBJECT,
+            "content": couches_active_notice,
+        }
+    )
