@@ -2,4 +2,6 @@
 
 pkill -f zoom
 
+export RCTV_TOKEN=
+
 uvx rctv
