@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pkill -f zoom
+pkill -f rctv
