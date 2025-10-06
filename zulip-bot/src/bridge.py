@@ -10,16 +10,20 @@ from src.notifier import (
     COUCHES_ALREADY_ACTIVE, REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT,
     get_dm_text, send_dm, 
     send_notification,
-    send_request_succeeded, send_request_failed
+    send_request_succeeded, send_request_failed,
+    send_request_aleady_active
 ) 
 
 
 VALID_PROMPTS = [
+    "open",
+    "open portal",
+    "open bridge",
     "open the portal",
-    "open the couch portal",
-    "open the couches portal",
     "open the bridge",
+    "open the couch portal",
     "open the couch bridge",
+    "open the couches portal",
     "open the couches bridge",
 ]
 
@@ -89,5 +93,7 @@ def parse_message(msg, client):
         is_already_active = status_is_active(client, BOT_USER_ID)
         if not is_already_active: 
             send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client)
+        else:
+            send_request_aleady_active(mention_markdown, curr_stream_id, curr_subject, client)
 
 

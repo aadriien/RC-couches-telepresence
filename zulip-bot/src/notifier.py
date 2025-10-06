@@ -22,12 +22,18 @@ HUB_SUBJECT = "RC-couches-telepresence-bridge"
 
 HUB_REQUEST_LINK = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
 
-VIRTUAL_TAG = "@**topic**"
+STATUS_EMOJI = ":test1:"
+STATUS_KEYWORD = "**` STATUS: `**"
+CURR_STATUS = "OPEN"
+
+VIRTUAL_TAG = f"{STATUS_EMOJI} {STATUS_KEYWORD}`-> {CURR_STATUS} `"
 ZOOM_LINK = "https://www.recurse.com/zoom/couches"
 
 COUCHES_ACTIVE_NOTICE = (
-    f"{VIRTUAL_TAG} The couches bridge is **active**! " 
+    f"---\n"
+    f"{VIRTUAL_TAG}\n\nThe couches bridge is **active**! " 
     f"Join the Zoom call: {ZOOM_LINK}"
+    f"\n---"
 )
 
 COUCHES_ALREADY_ACTIVE = (
@@ -109,4 +115,8 @@ def send_request_failed(mention_markdown, curr_stream_id, curr_subject, client):
     # Error message for user, with no further action
     send_notification(REQUEST_FAILED, curr_stream_id, curr_subject, client)
 
+
+def send_request_aleady_active(mention_markdown, curr_stream_id, curr_subject, client):
+    REQUEST_ALREADY_ACTIVE = f"{mention_markdown} {COUCHES_ALREADY_ACTIVE}"
+    send_notification(REQUEST_ALREADY_ACTIVE, curr_stream_id, curr_subject, client)
 

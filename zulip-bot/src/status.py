@@ -5,7 +5,11 @@
 ###############################################################################
 
 
-from src.notifier import NOTICE_STREAM_ID, NOTICE_SUBJECT, COUCHES_ACTIVE_NOTICE
+from src.notifier import (
+    NOTICE_STREAM_ID, NOTICE_SUBJECT, 
+    STATUS_KEYWORD,
+    COUCHES_ACTIVE_NOTICE
+)
 
 
 def fetch_latest_message(client, bot_user_id):
@@ -18,6 +22,7 @@ def fetch_latest_message(client, bot_user_id):
             {"operator": "sender", "operand": bot_user_id},
             {"operator": "channel", "operand": NOTICE_STREAM_ID},
             {"operator": "topic", "operand": NOTICE_SUBJECT},
+            {"operator": "search", "operand": STATUS_KEYWORD},
         ],
         "apply_markdown": False
     })
