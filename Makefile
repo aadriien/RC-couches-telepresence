@@ -18,9 +18,13 @@ setup:
 		$(POETRY) install --no-root --quiet; \
 	fi
 
-# Run bot client script as one-off instance
-run-client:
-	@$(POETRY) run python zulip-bot/bot.py --client
+# Run bot client (launch) script as one-off instance
+run-launch:
+	@$(POETRY) run python zulip-bot/bot.py --launch
+
+# Run bot client (close) script as one-off instance
+run-close:
+	@$(POETRY) run python zulip-bot/bot.py --close
 
 # Run bot server 24/7 to listen & respond 
 run-server:

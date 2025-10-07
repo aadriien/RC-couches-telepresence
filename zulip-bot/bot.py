@@ -30,16 +30,20 @@ bot = CouchesBridgeBot()
 
 
 @click.command()
-@click.option('--client', is_flag=True, help="Run in client mode")
-@click.option('--server', is_flag=True, help="Run in server mode")
-def launch_program(client, server):
-    if client and server:
-        click.echo("ERROR: You can't use --client and --server together")
+@click.option("--launch", is_flag=True, help="Run in client mode (launch)")
+@click.option("--close", is_flag=True, help="Run in client mode (close)")
+@click.option("--server", is_flag=True, help="Run in server mode")
+def launch_program(launch, close, server):
+    # Ensure only 1 mode specified
+    flags = [launch, close, server]
+    if sum(flags) != 1:
+        raise click.UsageError("ERROR: You must provide exactly one of --launch, --close, or --server")
 
-    # Bot acts as a one-off script to send announcement for bridge opening
-    elif client:
-        click.echo("Running in client mode...")
-        send_announcement(bot.client)
+    # Bot acts as a one-off script (launch or close) to send announcement for bridge status
+    if launch or close:
+        mode = "--launch" if launch else "--close"
+        click.echo(f"Running in client ({mode}) mode...")
+        send_announcement(bot.client, mode)
 
     # Bot acts as a server running 24/7 to listen for & respond to messages
     elif server:
@@ -47,7 +51,7 @@ def launch_program(client, server):
         bot.run()
 
     else:
-        click.echo("ERROR: Please specify --client or --server")
+        raise click.UsageError("ERROR: Please specify --launch or --close or --server")
 
 
 if __name__ == "__main__":

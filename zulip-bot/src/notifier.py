@@ -24,14 +24,16 @@ HUB_REQUEST_LINK = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
 
 STATUS_EMOJI = ":test1:"
 STATUS_KEYWORD = "**` STATUS: `**"
-CURR_STATUS = "OPEN"
 
-VIRTUAL_TAG = f"{STATUS_EMOJI} {STATUS_KEYWORD}`-> {CURR_STATUS} `"
+OPEN, CLOSED = "OPEN", "CLOSED"
+
+VIRTUAL_TAG = f"{STATUS_EMOJI} {STATUS_KEYWORD}"
 ZOOM_LINK = "https://www.recurse.com/zoom/couches"
 
 COUCHES_ACTIVE_NOTICE = (
     f"---\n"
-    f"{VIRTUAL_TAG}\n\nThe couches bridge is **active**! " 
+    f"{VIRTUAL_TAG}`-> {OPEN} `\n\n"
+    f"The couches bridge is **active**! " 
     f"Join the Zoom call: {ZOOM_LINK}"
     f"\n---"
 )
@@ -39,6 +41,14 @@ COUCHES_ACTIVE_NOTICE = (
 COUCHES_ALREADY_ACTIVE = (
     f"The couches bridge is already **active**! " 
     f"Join the Zoom call: {ZOOM_LINK}"
+)
+
+COUCHES_CLOSED_NOTICE = (
+    f"---\n"
+    f"{VIRTUAL_TAG}`-> {CLOSED} `\n\n"
+    f"The couches bridge is now **closed**. " 
+    f"To restore, simply tag me with a request to open the portal!"
+    f"\n---"
 )
 
 
@@ -89,8 +99,14 @@ def send_notification(notification_msg, stream_id, subject, client):
     })
 
 
-def send_announcement(client):
-    send_notification(COUCHES_ACTIVE_NOTICE, NOTICE_STREAM_ID, NOTICE_SUBJECT, client)
+def send_announcement(client, type):
+    valid_types = ["--launch", "--close"]
+    if type not in valid_types: return 
+    
+    if type == "--launch":
+        send_notification(COUCHES_ACTIVE_NOTICE, NOTICE_STREAM_ID, NOTICE_SUBJECT, client)
+    elif type == "--close":
+        send_notification(COUCHES_CLOSED_NOTICE, NOTICE_STREAM_ID, NOTICE_SUBJECT, client)
 
 
 def send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client):
