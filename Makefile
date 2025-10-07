@@ -4,7 +4,7 @@ POETRY ?= poetry
 VENV_DIR = .venv
 PYTHON_VERSION = python3
 
-.PHONY: setup run-client run-server clean 
+.PHONY: setup run-launch run-close run-server clean 
 
 all: setup run-server 
 
