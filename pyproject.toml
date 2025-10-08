@@ -1,14 +1,16 @@
 [tool.poetry]
 package-mode = false
 
+
 [project]
 name = "rc-couches-telepresence"
 version = "0.1.0"
-description = "Creating a telepresence at the Recurse hub"
+description = "Creating a telepresence at the Recurse Center hub"
 authors = [
     { name = "aadriien", email = "adriienlynch@gmail.com" },
     { name = "mmegaard", email = "mmegaard@gmail.com" },
     { name = "ssung", email = "sungsharon@gmail.com" },
+    { name = "demaere-oiie", email = "dave.long@bluewin.ch" },
 ]
 
 
