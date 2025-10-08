@@ -1,14 +1,14 @@
 [tool.poetry]
 package-mode = false
 
-
 [project]
 name = "rc-couches-telepresence"
 version = "0.1.0"
-description = ""
+description = "Creating a telepresence at the Recurse hub"
 authors = [
     { name = "aadriien", email = "adriienlynch@gmail.com" },
     { name = "mmegaard", email = "mmegaard@gmail.com" },
+    { name = "ssung", email = "sungsharon@gmail.com" },
 ]
 
 
@@ -23,4 +23,3 @@ click = "^8.3.0"
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-

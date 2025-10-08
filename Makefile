@@ -34,3 +34,7 @@ clean:
 	@echo "Removing virtual environment..."
 	@rm -rf .venv
 
+format:
+    @echo "Formatting repo..."
+    @pre-commit run --all-files
+	

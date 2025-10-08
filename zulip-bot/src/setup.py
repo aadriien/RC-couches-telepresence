@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def create_client():
     email = os.getenv("ZULIP_BOT_EMAIL")
     api_key = os.getenv("ZULIP_API_KEY")
