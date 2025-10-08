@@ -20,19 +20,19 @@ VALID_PROMPTS = [
 BOT_USER_ID = 971460
 
 
-# NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
-# NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
+NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
+NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)
 
-# HUB_STREAM_ID = "397 Bridge"
-# HUB_SUBJECT = "RCTV Couches Telepresence"
+HUB_STREAM_ID = "397 Bridge"
+HUB_SUBJECT = "RCTV Couches Telepresence"
 
+# # TESTING FOR NOW
+# NOTICE_STREAM_ID = "test-bot" 
+# NOTICE_SUBJECT = "RC-couches-telepresence-bridge" 
 
-# TESTING FOR NOW
-NOTICE_STREAM_ID = "test-bot" 
-NOTICE_SUBJECT = "RC-couches-telepresence-bridge" 
+# HUB_STREAM_ID = "test-bot"
+# HUB_SUBJECT = "RC-couches-telepresence-bridge"
 
-HUB_STREAM_ID = "test-bot"
-HUB_SUBJECT = "RC-couches-telepresence-bridge"
 
 HUB_REQUEST_LINK = f"#**{HUB_STREAM_ID}>{HUB_SUBJECT}** "
 
