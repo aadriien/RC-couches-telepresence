@@ -5,29 +5,19 @@
 ###############################################################################
 
 
+from src.constants import (
+    VALID_PROMPTS, BOT_USER_ID,
+    HUB_STREAM_ID, HUB_SUBJECT,
+    COUCHES_ALREADY_ACTIVE, 
+    REQUEST_TO_HUB
+)
 from src.status import status_is_active
 from src.notifier import (
-    COUCHES_ALREADY_ACTIVE, REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT,
     get_dm_text, send_dm, 
     send_notification,
     send_request_succeeded, send_request_failed,
     send_request_aleady_active
 ) 
-
-
-VALID_PROMPTS = [
-    "open",
-    "open portal",
-    "open bridge",
-    "open the portal",
-    "open the bridge",
-    "open the couch portal",
-    "open the couch bridge",
-    "open the couches portal",
-    "open the couches bridge",
-]
-
-BOT_USER_ID = 971460
 
 
 def process_request(msg_event, client):
@@ -59,17 +49,17 @@ def parse_dm(msg, client):
         return
 
     if not any(prompt in content for prompt in VALID_PROMPTS):
-        #send dm to user telling them correct way to address bot
+        # DM user, with error flagged
         send_dm(get_dm_text(False), sender_id, client)
     else:
         # Request is valid, now check if couches already active
         is_already_active = status_is_active(client, BOT_USER_ID)
         if not is_already_active: 
-            #send a topic message to have hub people turn it on
+            # Confirm for user & send message to 397 Bridge
             send_dm(get_dm_text(True), sender_id, client)
             send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
         else:
-            #send a dm to the user telling them it's already active with link
+            # DM user to inform already active
             send_dm(COUCHES_ALREADY_ACTIVE, sender_id, client)
 
 
@@ -87,13 +77,16 @@ def parse_message(msg, client):
     content = msg["content"].lower()
 
     if not any(prompt in content for prompt in VALID_PROMPTS):
+        # Mention user, with error flagged
         send_request_failed(mention_markdown, curr_stream_id, curr_subject, client)
     else:
         # Request is valid, now check if couches already active
         is_already_active = status_is_active(client, BOT_USER_ID)
         if not is_already_active: 
+            # Confirm for user & send message to 397 Bridge
             send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client)
         else:
+            # Mention user to inform already active
             send_request_aleady_active(mention_markdown, curr_stream_id, curr_subject, client)
 
 

@@ -5,7 +5,7 @@
 ###############################################################################
 
 
-from src.notifier import (
+from src.constants import (
     NOTICE_STREAM_ID, NOTICE_SUBJECT, 
     STATUS_KEYWORD,
     COUCHES_ACTIVE_NOTICE
