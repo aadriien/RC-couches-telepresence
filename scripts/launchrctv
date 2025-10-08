@@ -1,13 +1,14 @@
 #!/bin/sh
 
-pkill -f zoom
+pkill -f zoom || true
+
 
 export RCTV_TOKEN=
 
 
 while true; do
 
-pkill -f firefox
+pkill -f firefox || true
 
 curl https://rctv.recurse.com/get_all_apps_for_tauri?tv_login_token=FF47F231-DF00-40D2-BFF7-E36E3E472805 | jq -r '.apps[] | "\(.url) \(.on_screen_duration_seconds)"' | while read -r url seconds; do
     echo "Dumping $url"

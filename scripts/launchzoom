@@ -1,6 +1,8 @@
 #!/bin/sh
 
-pkill -f rctv
+pkill -f firefox || true
+pkill -f rctv || true
+
 zoom ${ZOOMLINK}
 
 while ! wmctrl -l | grep -q "Meeting"; do
