@@ -1,14 +1,16 @@
 [tool.poetry]
 package-mode = false
 
+
 [project]
 name = "rc-couches-telepresence"
 version = "0.1.0"
-description = "Creating a telepresence at the Recurse hub"
+description = "Creating a telepresence at the Recurse Center hub"
 authors = [
     { name = "aadriien", email = "adriienlynch@gmail.com" },
     { name = "mmegaard", email = "mmegaard@gmail.com" },
     { name = "ssung", email = "sungsharon@gmail.com" },
+    { name = "demaere-oiie", email = "dave.long@bluewin.ch" },
 ]
 
 
@@ -17,6 +19,7 @@ python = ">=3.10,<3.14"
 requests = "^2.31.0"
 python-dotenv = "^1.0.0"
 zulip = "^0.9.0"
+click = "^8.3.0"
 
 
 [build-system]

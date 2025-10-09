@@ -4,9 +4,9 @@ POETRY ?= poetry
 VENV_DIR = .venv
 PYTHON_VERSION = python3
 
-.PHONY: setup run clean
+.PHONY: setup run-launch run-close run-server clean 
 
-all: setup run
+all: setup run-server 
 
 # Install Poetry dependencies & set up venv
 setup:
@@ -18,8 +18,17 @@ setup:
 		$(POETRY) install --no-root --quiet; \
 	fi
 
-run:
-	@$(POETRY) run python zulip-bot/bot.py
+# Run bot client (launch) script as one-off instance
+run-launch:
+	@$(POETRY) run python zulip-bot/bot.py --launch
+
+# Run bot client (close) script as one-off instance
+run-close:
+	@$(POETRY) run python zulip-bot/bot.py --close
+
+# Run bot server 24/7 to listen & respond 
+run-server:
+	@$(POETRY) run python zulip-bot/bot.py --server
 
 clean:
 	@echo "Removing virtual environment..."
@@ -28,3 +37,4 @@ clean:
 format:
     @echo "Formatting repo..."
     @pre-commit run --all-files
+	
