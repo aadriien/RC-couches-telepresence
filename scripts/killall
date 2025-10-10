@@ -1,0 +1,7 @@
+#!/bin/sh
+
+pkill -f zoom || true
+pkill -f rctv || true
+pkill -f firefox || true
+
+

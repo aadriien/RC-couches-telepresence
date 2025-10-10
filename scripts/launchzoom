@@ -1,5 +1,7 @@
 #!/bin/sh
 
+pkill -f firefox || true
+pkill -f rctv || true
 
 zoom ${ZOOMLINK}
 
@@ -11,5 +13,3 @@ wmctrl -r "Meeting" -e 0,0,0,-1,-1
 wmctrl -r "Meeting" -e 0,0,0,-1,-1 add/maximized_vert,maximized_horz
 
 (cd /home/recurse/RC-couches-telepresence && poetry shell && python zulip-bot/bot.py )
-
-
