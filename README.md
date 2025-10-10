@@ -8,6 +8,12 @@ A Debian setup at the hub makes this possible by allowing in-person RCers to lau
 
 This project was collaboratively created by [Dave Long](https://github.com/demaere-oiie), [Adrien Lynch](https://github.com/aadriien), [Matt Megaard](https://github.com/mmegaard), and [Sharon Sung](https://github.com/minsun-ss) during the Fall 2 (Sept 2025) Pairing Jam event at [the Recurse Center](https://www.recurse.com)!
 
+## Physical setup
+
+The macropad in the hub are bound to keyboard settings F1 (killall), F2 (launchrctv), and F3 (launchzoom).
+
+RCTV application is the result of a separate application (rctv). Information about this can be found here!: https://github.com/fcjr/rctv.py
+
 ## Installation
 
 Python dependencies are managed by poetry.
@@ -33,16 +39,21 @@ To start the zoom session:
 
 To end the zoom session:
 ```
-./killzoom
+./killall
 ```
 
-## To Do:
+OR
+```
+./launchrctv
+```
 
-- add launch and kill zoom scripts
-- rebuild scripts to launch without needing the command line (i.e., bring profile in), and not maximize not based on timing
-- add the RCTV script to launch on zoom kill
-- set up laptop so recurse account does not need sudo, and turn off sleep so it's functionally a server with a gui
+# Relevant env variables required:
 
-## Features
+```
+# this is for the RCTC
+RCTV_TOKEN= 
+ZULIP_API_KEY=
+ZULIP_EMAIL=
+ZULIP_URL=
+```
 
-Additional features in the works!
