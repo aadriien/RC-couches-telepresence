@@ -35,6 +35,6 @@ clean:
 	@rm -rf .venv
 
 format:
-    @echo "Formatting repo..."
-    @pre-commit run --all-files
+	@echo "Formatting repo..."
+	@pre-commit run --all-files
 	
