@@ -32,12 +32,12 @@ bot = CouchesBridgeBot()
 @click.command()
 @click.option("--launch", is_flag=True, help="Run in client mode (launch)")
 @click.option("--close", is_flag=True, help="Run in client mode (close)")
-@click.option("--server", is_flag=True, help="Run in server mode")
-def launch_program(launch, close, server):
+@click.option("--service", is_flag=True, help="Run in service mode")
+def launch_program(launch, close, service):
     # Ensure only 1 mode specified
-    flags = [launch, close, server]
+    flags = [launch, close, service]
     if sum(flags) != 1:
-        raise click.UsageError("ERROR: You must provide exactly one of --launch, --close, or --server")
+        raise click.UsageError("ERROR: You must provide exactly one of --launch, --close, or --service")
 
     # Bot acts as a one-off script (launch or close) to send announcement for bridge status
     if launch or close:
@@ -45,13 +45,13 @@ def launch_program(launch, close, server):
         click.echo(f"Running in client ({mode}) mode...")
         send_announcement(bot.client, mode)
 
-    # Bot acts as a server running 24/7 to listen for & respond to messages
-    elif server:
-        click.echo("Running in server mode...")
+    # Bot acts as a service running 24/7 to listen for & respond to messages
+    elif service:
+        click.echo("Running in service mode...")
         bot.run()
 
     else:
-        raise click.UsageError("ERROR: Please specify --launch or --close or --server")
+        raise click.UsageError("ERROR: Please specify --launch or --close or --service")
 
 
 if __name__ == "__main__":
@@ -61,10 +61,10 @@ if __name__ == "__main__":
     #   can use Python Click to pass CLI arguments
     # For example,
     #   `python3 bot.py --client`
-    #   `python3 bot.py --server`
+    #   `python3 bot.py --service`
     # Or alternativey, just use Makefile rules
     #   `make run-client`
-    #   `make run-server`
+    #   `make run-service`
 
     launch_program()
 

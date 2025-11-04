@@ -10,8 +10,8 @@
       Description=couches-telepresence (service)
       [Service]
       Restart=on-failure
-      WorkingDirectory={{ home }}/couches-telepresence
-      ExecStart=make run-service
+      WorkingDirectory={{ home }}/couches-telepresence-bot
+      ExecStart=make all
       [Install]
       WantedBy=default.target
 

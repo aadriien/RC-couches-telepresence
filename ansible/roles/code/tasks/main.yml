@@ -17,6 +17,7 @@
     - zulip-bot/src/notifier.py
     - zulip-bot/src/setup.py
     - zulip-bot/src/status.py
+    - Makefile
     - poetry.lock
     - pyproject.toml
     - .env
