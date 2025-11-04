@@ -43,9 +43,9 @@ To run bot as a **client** (`close` mode: one-off, when Zoom call ends):
 make run-close
 ```
 
-To run bot as a **server** (listen for and respond to messages 24/7):
+To run bot as a **service** (listen for and respond to messages 24/7):
 ```
-make run-server
+make run-service
 ```
 
 ### For the backend:
@@ -65,6 +65,6 @@ To **end** the Zoom session:
 
 - rebuild scripts to launch without needing the command line (i.e., bring profile in), and not maximize not based on timing
 - add the RCTV script to launch on zoom kill
-- set up laptop so recurse account does not need sudo, and turn off sleep so it's functionally a server with a gui
+- set up laptop so recurse account does not need sudo, and turn off sleep so it's functionally a service with a gui
 
 
