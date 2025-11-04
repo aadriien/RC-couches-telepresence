@@ -1,6 +1,10 @@
 - file:
-    path: "{{ tgt }}"
+    path: "{{ tgt }}/{{ item }}"
     state: directory
+  with_items:
+    - ""
+    - zulip-bot
+    - zulip-bot/src
 
 - copy:
     src: "{{ repo }}/{{ item }}"
