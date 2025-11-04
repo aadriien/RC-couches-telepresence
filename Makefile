@@ -4,9 +4,11 @@ POETRY ?= poetry
 VENV_DIR = .venv
 PYTHON_VERSION = python3
 
-.PHONY: setup run-launch run-close run-server clean 
+ACTIVATE_VENV = source $(VENV_DIR)/bin/activate &&
 
-all: setup run-server 
+.PHONY: setup run-launch run-close run-service clean format
+
+all: setup run-service 
 
 # Install Poetry dependencies & set up venv
 setup:
@@ -20,15 +22,15 @@ setup:
 
 # Run bot client (launch) script as one-off instance
 run-launch:
-	@$(POETRY) run python zulip-bot/bot.py --launch
+	@$(ACTIVATE_VENV) $(POETRY) run python zulip-bot/bot.py --launch
 
 # Run bot client (close) script as one-off instance
 run-close:
-	@$(POETRY) run python zulip-bot/bot.py --close
+	@$(ACTIVATE_VENV) $(POETRY) run python zulip-bot/bot.py --close
 
-# Run bot server 24/7 to listen & respond 
-run-server:
-	@$(POETRY) run python zulip-bot/bot.py --server
+# Run bot service 24/7 to listen & respond 
+run-service:
+	@$(ACTIVATE_VENV) $(POETRY) run python zulip-bot/bot.py --service
 
 clean:
 	@echo "Removing virtual environment..."
