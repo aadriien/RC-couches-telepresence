@@ -1,0 +1,23 @@
+- file:
+    path: "{{ home }}/.config/systemd/user"
+    state: directory
+    mode: "0755"
+
+- copy:
+    dest: "{{ home }}/.config/systemd/user/couches-telepresence.service"
+    content: |
+      [Unit]
+      Description=couches-telepresence (service)
+      [Service]
+      Restart=on-failure
+      WorkingDirectory={{ home }}/couches-telepresence
+      ExecStart=make run-service
+      [Install]
+      WantedBy=default.target
+
+- systemd:
+    name: "couches-telepresence.service"
+    scope: user
+    enabled: true
+    state: restarted
+    daemon_reload: true

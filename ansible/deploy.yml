@@ -10,8 +10,8 @@
     - block:
       - include_role:
           name: code
-      # - include_role:
-      #     name: svc
+      - include_role:
+          name: svc
       environment:
         DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ svc_uid.stdout }}/bus"
       vars:
