@@ -1,0 +1,19 @@
+- file:
+    path: "{{ tgt }}"
+    state: directory
+
+- copy:
+    src: "{{ repo }}/{{ item }}"
+    dest: "{{ tgt }}/{{ item }}"
+    mode: 0600
+  with_items:
+    - zulip-bot/bot.py
+    - zulip-bot/src/bridge.py
+    - zulip-bot/src/constants.py
+    - zulip-bot/src/notifier.py
+    - zulip-bot/src/setup.py
+    - zulip-bot/src/status.py
+    - poetry.lock
+    - pyproject.toml
+    - .env
+

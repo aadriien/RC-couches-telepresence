@@ -1,0 +1,18 @@
+- hosts: all
+  become: true
+  become_user: svc-couches-telepresence-bot
+  pre_tasks:
+    - command: id -u
+      register: svc_uid
+    - shell: "echo $HOME"
+      register: home_res
+  tasks:
+    - block:
+      - include_role:
+          name: code
+      # - include_role:
+      #     name: svc
+      environment:
+        DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ svc_uid.stdout }}/bus"
+      vars:
+        home: "{{ home_res.stdout }}"
