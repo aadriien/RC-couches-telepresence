@@ -6,6 +6,8 @@ This tool aims to bridge the **in-person couches** at the RC hub with the **remo
 
 This project was collaboratively created by [Dave Long](https://github.com/demaere-oiie), [Adrien Lynch](https://github.com/aadriien), [Matt Megaard](https://github.com/mmegaard), and [Sharon Sung](https://github.com/minsun-ss) during the Fall 2 (Sept 2025) Pairing Jam event at [the Recurse Center](https://www.recurse.com)! 
 
+Thank you to [Florian Ragwitz](https://github.com/rafl) for helping with bot setup (24/7 service) on the Heap Cluster!
+
 
 ## How It Works
 
