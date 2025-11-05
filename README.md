@@ -65,26 +65,28 @@ To **end** the Zoom session:
 
 **`Couches Bridge Bot` runs 24/7 on [RC's Heap Community Cluster](https://www.recurse.com/blog/126-heap-sponsors-rc-community-cluster).** This service functionality is what enables folks in the RC community to engage with the bot via Zulip messaging. 
 
-### Heap cluster for bot admins:
+### Overview notes:
 
-These commands are designed for project collaborators, i.e. folks who are responsible for maintaining the bot. They have been granted explicit permission on the Heap Cluster that authorizes them to perform these actions. All steps below assume that the user has already SSH'ed into the relevant cluster machine with valid credentials. 
+These commands are designed for project collaborators, i.e. folks responsible for **maintaining the bot**. They have been granted explicit permission on the Heap Cluster, which authorizes them to perform these actions. All steps below assume that the user has already **SSH'ed into the relevant cluster machine** with valid credentials. 
 
-Run new bash shell (switch to bot service user):
+### Heap for bot admins:
+
+Run **new bash shell** (switch to bot service user):
 ```
 sudo -u svc-couches-telepresence-bot bash
 ```
 
-Point to bot service user environment (view from there):
+Point to bot **service user environment** (view from there):
 ```
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 ```
 
-Check bot service status:
+Check bot **service status**:
 ```
 systemctl --user status couches-telepresence.service
 ```
 
-Review any bot service logs:
+Review any bot **service logs**:
 ```
 journalctl --user -u couches-telepresence.service
 ```
