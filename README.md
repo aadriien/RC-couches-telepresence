@@ -67,9 +67,23 @@ To **end** the Zoom session:
 
 ### Overview notes:
 
-These commands are designed for project collaborators, i.e. folks responsible for **maintaining the bot**. They have been granted explicit permission on the Heap Cluster, which authorizes them to perform these actions. All steps below assume that the user has already **SSH'ed into the relevant cluster machine** with valid credentials. 
+These commands are designed for **project collaborators**, i.e. folks responsible for **maintaining the bot**. They have been granted explicit permission on the Heap Cluster, which authorizes them to perform these actions. All steps below assume that the user has already **SSH'ed into the relevant cluster machine** with valid credentials. 
 
-### Heap for bot admins:
+For more information, reach out to [Adrien Lynch](https://github.com/aadriien) or [Florian Ragwitz](https://github.com/rafl). 
+
+### Heap deployment:
+
+Install **Ansible** (if needed):
+```
+brew install ansible
+```
+
+**Deploy `Couches Bridge Bot`** via Ansible:
+```
+ansible-playbook -i ansible/inventory ansible/deploy.yml
+```
+
+### Heap maintenance:
 
 Run **new bash shell** (switch to bot service user):
 ```
