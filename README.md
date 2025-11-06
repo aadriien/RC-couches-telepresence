@@ -6,6 +6,8 @@ This tool aims to bridge the **in-person couches** at the RC hub with the **remo
 
 This project was collaboratively created by [Dave Long](https://github.com/demaere-oiie), [Adrien Lynch](https://github.com/aadriien), [Matt Megaard](https://github.com/mmegaard), and [Sharon Sung](https://github.com/minsun-ss) during the Fall 2 (Sept 2025) Pairing Jam event at [the Recurse Center](https://www.recurse.com)! 
 
+Thank you to [Florian Ragwitz](https://github.com/rafl) for helping with bot setup (24/7 service) on the Heap Cluster!
+
 
 ## How It Works
 
@@ -43,9 +45,9 @@ To run bot as a **client** (`close` mode: one-off, when Zoom call ends):
 make run-close
 ```
 
-To run bot as a **server** (listen for and respond to messages 24/7):
+To run bot as a **service** (listen for and respond to messages 24/7):
 ```
-make run-server
+make run-service
 ```
 
 ### For the backend:
@@ -61,10 +63,55 @@ To **end** the Zoom session:
 ```
 
 
+## RC Heap Cluster
+
+**`Couches Bridge Bot` runs 24/7 on [RC's Heap Community Cluster](https://www.recurse.com/blog/126-heap-sponsors-rc-community-cluster).** This service functionality is what enables folks in the RC community to engage with the bot via Zulip messaging. 
+
+### Overview notes:
+
+These commands are designed for **project collaborators**, i.e. folks responsible for **maintaining the bot**. They have been granted explicit permission on the Heap Cluster, which authorizes them to perform these actions. All steps below assume that the user has already **SSH'ed into the relevant cluster machine** with valid credentials. 
+
+For more information, reach out to [Adrien Lynch](https://github.com/aadriien) or [Florian Ragwitz](https://github.com/rafl). 
+
+### Heap deployment:
+
+Install **Ansible** (if needed):
+```
+brew install ansible
+```
+
+**Deploy `Couches Bridge Bot`** via Ansible:
+```
+ansible-playbook -i ansible/inventory ansible/deploy.yml
+```
+
+### Heap maintenance:
+
+Run **new bash shell** (switch to bot service user):
+```
+sudo -u svc-couches-telepresence-bot bash
+```
+
+Point to bot **service user environment** (view from there):
+```
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+```
+
+Check bot **service status**:
+```
+systemctl --user status couches-telepresence.service
+```
+
+Review any bot **service logs**:
+```
+journalctl --user -u couches-telepresence.service
+```
+
+
 ## To Do:
 
 - rebuild scripts to launch without needing the command line (i.e., bring profile in), and not maximize not based on timing
 - add the RCTV script to launch on zoom kill
-- set up laptop so recurse account does not need sudo, and turn off sleep so it's functionally a server with a gui
+- set up laptop so recurse account does not need sudo, and turn off sleep so it's functionally a service with a gui
 
 

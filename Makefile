@@ -1,12 +1,15 @@
 # RC Couches Telepresence Zulip Bot
 
+# Add Poetry's install location to PATH so Make can find it
+export PATH := $(HOME)/.local/bin:$(PATH)
+
 POETRY ?= poetry
 VENV_DIR = .venv
 PYTHON_VERSION = python3
 
-.PHONY: setup run-launch run-close run-server clean 
+.PHONY: setup run-launch run-close run-service clean format
 
-all: setup run-server 
+all: setup run-service 
 
 # Install Poetry dependencies & set up venv
 setup:
@@ -26,9 +29,9 @@ run-launch:
 run-close:
 	@$(POETRY) run python zulip-bot/bot.py --close
 
-# Run bot server 24/7 to listen & respond 
-run-server:
-	@$(POETRY) run python zulip-bot/bot.py --server
+# Run bot service 24/7 to listen & respond 
+run-service:
+	@$(POETRY) run python zulip-bot/bot.py --service
 
 clean:
 	@echo "Removing virtual environment..."
