@@ -8,39 +8,38 @@
 from src.constants import (
     VALID_PROMPTS, BOT_USER_ID,
     HUB_STREAM_ID, HUB_SUBJECT,
-    COUCHES_ALREADY_ACTIVE, 
+    COUCHES_ALREADY_ACTIVE,
     REQUEST_TO_HUB
 )
-from src.status import status_is_active
+from src.validator import status_is_active
 from src.notifier import (
-    get_dm_text, send_dm, 
-    send_notification,
+    get_dm_text,
     send_request_succeeded, send_request_failed,
     send_request_aleady_active
-) 
+)
 
 
-def process_request(msg_event, client):
+def process_request(msg_event, zulip_client):
     if msg_event["type"] != "message":
         return
-    
+
     msg = msg_event["message"]
-    
+
     # Determine message type (DM vs mention in channel)
     is_dm = msg["type"] == "private"
     is_mention = "mentioned" in msg_event.get("flags", [])
 
     if is_dm:
-        parse_dm(msg, client)
+        parse_dm(msg, zulip_client)
 
     elif is_mention:
         # Prevent infinite loop on itself
         if "wildcard_mentioned" in msg_event.get("flags", []):
             return
-        parse_message(msg, client)
+        parse_message(msg, zulip_client)
 
 
-def parse_dm(msg, client):
+def parse_dm(msg, zulip_client):
     sender_id = msg["sender_id"]
     content = msg["content"].lower()
 
@@ -50,20 +49,20 @@ def parse_dm(msg, client):
 
     if not any(prompt in content for prompt in VALID_PROMPTS):
         # DM user, with error flagged
-        send_dm(get_dm_text(False), sender_id, client)
+        zulip_client.send_dm(get_dm_text(False), sender_id)
     else:
         # Request is valid, now check if couches already active
-        is_already_active = status_is_active(client, BOT_USER_ID)
-        if not is_already_active: 
+        is_already_active = status_is_active(zulip_client)
+        if not is_already_active:
             # Confirm for user & send message to 397 Bridge
-            send_dm(get_dm_text(True), sender_id, client)
-            send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT, client)
+            zulip_client.send_dm(get_dm_text(True), sender_id)
+            zulip_client.send_notification(REQUEST_TO_HUB, HUB_STREAM_ID, HUB_SUBJECT)
         else:
             # DM user to inform already active
-            send_dm(COUCHES_ALREADY_ACTIVE, sender_id, client)
+            zulip_client.send_dm(COUCHES_ALREADY_ACTIVE, sender_id)
 
 
-def parse_message(msg, client):
+def parse_message(msg, zulip_client):
     # Extra check to ensure bot doesn't loop on itself
     if msg["sender_id"] == BOT_USER_ID:
         return
@@ -78,15 +77,15 @@ def parse_message(msg, client):
 
     if not any(prompt in content for prompt in VALID_PROMPTS):
         # Mention user, with error flagged
-        send_request_failed(mention_markdown, curr_stream_id, curr_subject, client)
+        send_request_failed(mention_markdown, curr_stream_id, curr_subject, zulip_client)
     else:
         # Request is valid, now check if couches already active
-        is_already_active = status_is_active(client, BOT_USER_ID)
-        if not is_already_active: 
+        is_already_active = status_is_active(zulip_client)
+        if not is_already_active:
             # Confirm for user & send message to 397 Bridge
-            send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, client)
+            send_request_succeeded(mention_markdown, curr_stream_id, curr_subject, zulip_client)
         else:
             # Mention user to inform already active
-            send_request_aleady_active(mention_markdown, curr_stream_id, curr_subject, client)
+            send_request_aleady_active(mention_markdown, curr_stream_id, curr_subject, zulip_client)
 
 

@@ -19,6 +19,8 @@ VALID_PROMPTS = [
 
 BOT_USER_ID = 971460
 
+COOLDOWN_MINS = 5
+
 
 NOTICE_STREAM_ID = "🧑‍💻 current batches" # channel (e.g. checkins)
 NOTICE_SUBJECT = "Virtual couches co-working" # topic (e.g. FirstName LastName)

@@ -7,7 +7,7 @@
 
 import click # for args via CLI 
 
-from src.setup import create_client, subscribe_to_all_public_streams
+from src.setup import create_client
 from src.bridge import process_request
 from src.notifier import send_announcement
 
@@ -16,7 +16,7 @@ class CouchesBridgeBot:
     def __init__(self):
         self.client = create_client()
 
-        self.subscribed_streams = subscribe_to_all_public_streams(self.client)
+        self.subscribed_streams = self.client.subscribe_to_all_public_streams()
 
     def run(self):
         self.client.call_on_each_event(
