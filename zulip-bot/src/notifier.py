@@ -12,7 +12,14 @@ from src.constants import (
     COUCHES_ACTIVE_NOTICE, COUCHES_ALREADY_ACTIVE, 
     COUCHES_CLOSED_NOTICE,
     REQUEST_TO_HUB,
-    SUCCESS, FAIL
+    SUCCESS, FAIL,
+    BOT_USER_ID
+)
+
+from src.status import (
+    fetch_latest_message,
+    mins_elapsed_since_message,
+    status_is_active, status_is_closed
 )
 
 
@@ -41,11 +48,27 @@ def send_notification(notification_msg, stream_id, subject, client):
 
 def send_announcement(client, type):
     valid_types = ["--launch", "--close"]
-    if type not in valid_types: return 
+    if type not in valid_types: 
+        return 
     
     if type == "--launch":
+        # Check if message was sent recently (past 5 mins) to avoid spam
+        is_already_active = status_is_active(client, BOT_USER_ID)
+        if is_already_active: 
+            latest_msg = fetch_latest_message(client, BOT_USER_ID)
+            mins_elapsed = mins_elapsed_since_message(latest_msg)
+            if mins_elapsed < 5:
+                return
         send_notification(COUCHES_ACTIVE_NOTICE, NOTICE_STREAM_ID, NOTICE_SUBJECT, client)
+    
     elif type == "--close":
+        # Check if message was sent recently (past 5 mins) to avoid spam
+        is_already_closed = status_is_closed(client, BOT_USER_ID)
+        if is_already_closed: 
+            latest_msg = fetch_latest_message(client, BOT_USER_ID)
+            mins_elapsed = mins_elapsed_since_message(latest_msg)
+            if mins_elapsed < 5:
+                return
         send_notification(COUCHES_CLOSED_NOTICE, NOTICE_STREAM_ID, NOTICE_SUBJECT, client)
 
 
